@@ -1,0 +1,28 @@
+class Solution {
+    public int findMinArrowShots(int[][] points) {
+        int n= points.length;
+        //sort matrix with ending point
+        Arrays.sort(points,(a,b) -> Integer.compare(a[1],b[1]));
+
+        int []prev = points[0];
+        int count = 1;
+        
+        for (int i = 1; i<n; i++){
+            int currStartPoint = points[i][0];
+            int currEndPoint = points[i][0];
+
+            int prevStartPoint = prev[0];
+            int prevEndPoint = prev[1];
+
+            if (currStartPoint > prevEndPoint){ // No Overlapping
+                count++;
+                prev = points[i];
+            }
+            else{
+                prevStartPoint = Math.max(currStartPoint, prevStartPoint);
+                prevEndPoint = Math.min(currStartPoint, prevEndPoint);
+            }
+        }
+        return count;
+    }
+}
